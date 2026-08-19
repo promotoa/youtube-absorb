@@ -40,6 +40,42 @@
 - Claude Code (또는 스킬을 지원하는 Claude 환경)
 - Python 3.9+ — 나머지(yt-dlp·ffmpeg, 경우에 따라 deno)는 Claude가 첫 실행 때 알아서 챙깁니다.
 
+---
+
+## English
+
+**Give Claude a YouTube link — get back a report you can trust.**
+
+This skill transcribes the video (free, subtitle-based), cross-checks what appeared on screen,
+and returns a chat report instead of a wall of text:
+
+| Section | What you get |
+|---|---|
+| ① Verdict | What this video is, and whether it's trustworthy |
+| ② Key content | Timestamped summary — so you don't have to watch |
+| ③ Substance vs. filler | Verified facts / unverified claims / hype, separated |
+| ④ Screen-only information | Code, settings, numbers that were never spoken aloud |
+| ⑤ For your situation | Insights mapped to your context (only when visible in the conversation) |
+| ⑥ Next steps | Concrete ways to build on it — set it up, verify claims, save a summary |
+
+### Install
+
+In [Claude Code](https://claude.com/claude-code), just say:
+
+> Install https://github.com/promotoa/youtube-absorb as a skill.
+
+That's it. Claude checks and installs what it needs (yt-dlp, ffmpeg, deno if required) on first run.
+
+### Use
+
+> Summarize this video: https://youtu.be/...
+
+- **Free by default** — the subtitle path needs no API key. Precision mode (`--whisper`) optionally uses an OpenAI key.
+- **Reads the screen** — commands and settings that are never spoken don't exist in any transcript. Frame reading recovers them.
+- **Never stores the video** — only the transcript text and a handful of selected frames remain.
+
+Requires Python 3.9+. Everything else is Claude's job.
+
 ## License
 
 MIT © 2026 promotoa — [LICENSE](LICENSE)
