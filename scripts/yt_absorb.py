@@ -250,7 +250,7 @@ def main():
                    "segments": len(segs), "frames_raw": n_frames, "light": a.light},
                   f, ensure_ascii=False, indent=1)
     print(f"④ 완료 — {dest} (transcript.md · frames_raw {n_frames})")
-    print("다음 = Claude 판독: 시트 전수 판독 → 표적 교정(고유명사·명령어·수치) → 프레임 선별(frames/) → raw 삭제 → 채팅 보고(SKILL.md §2 양식·질문으로 마감)")
+    print("다음 = Claude 판독: 시트 전수 판독 → 표적 교정(고유명사·명령어·수치) → 프레임 선별(frames/) → raw 삭제 → 채팅 보고(SKILL.md §2 양식) → 다음 스텝 제안(§3)")
 
 if __name__ == "__main__":
     main()
