@@ -123,10 +123,11 @@ def parse_vtt(path):
                 last = ln
     return segs
 
-def transcribe_subs(tmp, url, dur):
-    """수동 자막 우선, 없으면 자동 자막. 언어별 개별 요청(ko→en→ja) — 한 언어의 429/부재가 전체를 죽이지 않게."""
+def transcribe_subs(tmp, url, dur, langs=("ko", "en", "ja")):
+    """수동 자막 우선, 없으면 자동 자막. 언어별 개별 요청 — 한 언어의 429/부재가 전체를 죽이지 않게.
+    langs = 시도 순서(기본 ko→en→ja · 호출부가 메타의 영상 원어·실재 자막 언어를 뒤에 붙인다)."""
     for flag, label in (("--write-subs", "수동 자막"), ("--write-auto-subs", "자동 자막")):
-        for lang in ("ko", "en", "ja"):
+        for lang in langs:
             subprocess.run(YTDLP + [flag, "--sub-langs", lang, "--sub-format", "vtt", "--skip-download",
                                     "-o", os.path.join(tmp, "subs.%(ext)s"), url],
                            capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -137,8 +138,10 @@ def transcribe_subs(tmp, url, dur):
                     return segs, f"{label}({lang})"
                 for g in got:
                     os.remove(os.path.join(tmp, g))
-    raise SystemExit("자막을 받지 못했습니다 — 영상에 자막이 없거나 유튜브가 요청을 제한(429)했을 수 있습니다. "
-                     "잠시 후 재시도하거나 --whisper 모드(OPENAI_API_KEY 필요)를 쓰세요.")
+    raise SystemExit("자막을 받지 못했습니다 — 영상에 자막이 없거나, 시도한 언어(" + ",".join(langs) + ") 밖의 "
+                     "언어이거나, 유튜브가 요청을 제한(429)했을 수 있습니다. `yt-dlp --list-subs <URL>`로 실재 "
+                     "자막 언어를 먼저 확인하세요(있으면 무료 경로가 살아 있는 것) — 정말 자막이 없을 때만 "
+                     "--whisper 모드(OPENAI_API_KEY 필요·유료)입니다.")
 
 # ── 전사 층 B: Whisper API(--whisper · 정밀 모드) ──────────────────────────
 
@@ -197,7 +200,14 @@ def main():
         if a.whisper:
             segs, how = transcribe_whisper(tmp, a.url, dur)
         else:
-            segs, how = transcribe_subs(tmp, a.url, dur)
+            # 시도 언어 = ko/en/ja + 영상 원어 + 실재하는 수동 자막 언어(메타에서 도출 — 3언어 밖 영상도 무료 경로 유지)
+            langs = ["ko", "en", "ja"]
+            for cand in ([str(meta.get("language") or "").split("-")[0]]
+                         + list((meta.get("subtitles") or {}).keys())[:5]):
+                base = cand.strip()
+                if base and base not in langs:
+                    langs.append(base)
+            segs, how = transcribe_subs(tmp, a.url, dur, langs=tuple(langs[:8]))
         print(f"② 전사 OK — {how} · 세그먼트 {len(segs)}")
 
         # ③ 프레임 후보(장면전환 · --light면 생략)
@@ -247,9 +257,9 @@ def main():
     with open(os.path.join(dest, "meta.json"), "w", encoding="utf-8") as f:
         json.dump({"url": a.url, "id": vid, "title": title, "channel": meta.get("channel"),
                    "upload_date": updated, "duration_sec": dur, "transcribed_by": how,
-                   "segments": len(segs), "frames_raw": n_frames, "light": a.light},
+                   "segments": len(segs), "frames_kept": n_frames, "light": a.light},
                   f, ensure_ascii=False, indent=1)
-    print(f"④ 완료 — {dest} (transcript.md · frames_raw {n_frames})")
+    print(f"④ 완료 — {dest} (transcript.md · 선별 프레임 {n_frames}장)")
     print("다음 = Claude 판독: 시트 전수 판독 → 표적 교정(고유명사·명령어·수치) → 프레임 선별(frames/) → raw 삭제 → 채팅 보고(SKILL.md §2 양식) → 다음 스텝 제안(§3)")
 
 if __name__ == "__main__":
