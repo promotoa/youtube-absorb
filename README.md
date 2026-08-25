@@ -1,23 +1,36 @@
+<div align="center">
+
+<img src="assets/logo.png" width="120" alt="youtube-absorb" />
+
 # youtube-absorb
 
-**유튜브 영상을 Claude가 대신 보고, 판단까지 담은 보고서로 돌려주는 스킬.**
+**유튜브 영상, 보기 전에 Claude가 먼저 보고 — 믿을 수 있는 보고로 돌려드립니다.**
 
-영상 링크 하나를 주면 — 자막을 전사하고, 화면 프레임까지 대조해서 —
-믿을 만한 영상인지, 알맹이가 뭔지, 화면에만 지나간 정보(코드·설정값)까지 채팅으로 보고합니다.
+[![License: MIT](https://img.shields.io/badge/License-MIT-f5a623.svg)](LICENSE)
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-5a67d8.svg)](https://claude.com/claude-code)
+[![무료](https://img.shields.io/badge/%EA%B8%B0%EB%B3%B8%20%EB%AA%A8%EB%93%9C-API%20%ED%82%A4%20%EB%B6%88%ED%95%84%EC%9A%94-2ea043.svg)](#특징)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-8b8b98.svg)](../../pulls)
 
-## 설치 (한 줄이면 됩니다)
+</div>
+
+## 설치 — 한 줄이면 됩니다
 
 [Claude Code](https://claude.com/claude-code)에서 이렇게 말하세요:
 
-> https://github.com/promotoa/youtube-absorb 를 내 스킬로 설치해줘.
+> **https://github.com/promotoa/youtube-absorb 를 내 스킬로 설치해줘.**
 
 끝입니다. 필요한 프로그램(yt-dlp·ffmpeg)은 첫 실행 때 Claude가 알아서 확인하고 설치합니다.
 
-## 사용
+## 이렇게 됩니다
 
 > 이 영상 요약해줘: https://youtu.be/...
 
-받게 되는 것:
+<div align="center">
+<img src="assets/demo-report.png" width="860" alt="영상 링크 하나 → 판정·핵심·검증까지 담긴 보고" />
+</div>
+
+요약이 아니라 **판단**입니다 — 믿을 만한 영상인지, 알맹이가 뭔지, 말로 설명하지 않고
+화면에만 지나간 정보(코드·설정값)까지 채팅 보고로 돌려받습니다.
 
 | 절 | 내용 |
 |---|---|
@@ -25,8 +38,8 @@
 | ② 핵심 내용 | 타임스탬프 붙은 요약 — 영상을 안 봐도 되게 |
 | ③ 알맹이 vs 껍데기 | 검증된 사실 / 미검증 주장 / 과장을 갈라서 |
 | ④ 화면에만 있던 것 | 말로 설명 안 한 코드·설정값·수치 |
-| ⑤ 당신 상황에서는 | 대화에서 보이는 내 상황에 비춘 시사점 (보일 때만 — 없으면 다음 스텝이 ⑤가 됩니다) |
-| ⑥ 다음 스텝 | 이 내용으로 이어갈 수 있는 것 — 절차 세팅·주장 검증·정리 파일 등 구체 제안 |
+| ⑤ 당신 상황에서는 | 대화에서 보이는 내 상황에 비춘 시사점 (보일 때만) |
+| ⑥ 다음 스텝 | 이 내용으로 이어갈 수 있는 것 — 구체 제안 |
 
 ## 특징
 
@@ -75,6 +88,13 @@ That's it. Claude checks and installs what it needs (yt-dlp, ffmpeg, deno if req
 - **Never stores the video** — only the transcript text and a handful of selected frames remain.
 
 Requires Python 3.9+. Everything else is Claude's job.
+
+---
+
+## 응원하기
+
+이 스킬이 시간을 아껴줬다면 — ⭐ 스타 하나가 큰 힘이 됩니다.
+후원은 상단의 **♥ Sponsor** 버튼으로 (만든 사람: [AI 즐겨찾기](https://github.com/promotoa) 채널).
 
 ## License
 
