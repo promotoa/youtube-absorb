@@ -59,8 +59,25 @@
 
 **Give Claude a YouTube link — get back a report you can trust.**
 
-This skill transcribes the video (free, subtitle-based), cross-checks what appeared on screen,
-and returns a chat report instead of a wall of text:
+### Install — one line
+
+In [Claude Code](https://claude.com/claude-code), just say:
+
+> **Install https://github.com/promotoa/youtube-absorb as a skill.**
+
+That's it. Claude checks and installs what it needs (yt-dlp, ffmpeg, deno if required) on first run.
+
+### What you get
+
+> Summarize this video: https://youtu.be/...
+
+<div align="center">
+<img src="assets/demo-report-en.png" width="860" alt="One link in — verdict, key content and verification out" />
+</div>
+
+Not a summary — a **judgement**. The skill transcribes the video (free, subtitle-based),
+cross-checks what appeared on screen, and returns a chat report instead of a wall of text.
+Reports come back in **your language** — the skill itself is bilingual-friendly:
 
 | Section | What you get |
 |---|---|
@@ -71,23 +88,15 @@ and returns a chat report instead of a wall of text:
 | ⑤ For your situation | Insights mapped to your context (only when visible in the conversation) |
 | ⑥ Next steps | Concrete ways to build on it — set it up, verify claims, save a summary |
 
-### Install
-
-In [Claude Code](https://claude.com/claude-code), just say:
-
-> Install https://github.com/promotoa/youtube-absorb as a skill.
-
-That's it. Claude checks and installs what it needs (yt-dlp, ffmpeg, deno if required) on first run.
-
-### Use
-
-> Summarize this video: https://youtu.be/...
+### Highlights
 
 - **Free by default** — the subtitle path needs no API key. Precision mode (`--whisper`) optionally uses an OpenAI key.
 - **Reads the screen** — commands and settings that are never spoken don't exist in any transcript. Frame reading recovers them.
 - **Never stores the video** — only the transcript text and a handful of selected frames remain.
 
 Requires Python 3.9+. Everything else is Claude's job.
+
+If this skill saved you an hour of watching — a ⭐ means a lot, and the **♥ Sponsor** button is up top.
 
 ---
 
