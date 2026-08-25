@@ -72,20 +72,20 @@ That's it. Claude checks and installs what it needs (yt-dlp, ffmpeg, deno if req
 > Summarize this video: https://youtu.be/...
 
 <div align="center">
-<img src="assets/demo-report-en.png" width="860" alt="One link in — verdict, key content and verification out" />
+<img src="assets/demo-report-en.png" width="860" alt="One link in — verdict, key content, and verification out" />
 </div>
 
-Not a summary — a **judgement**. The skill transcribes the video (free, subtitle-based),
-cross-checks what appeared on screen, and returns a chat report instead of a wall of text.
-Reports come back in **your language** — the skill itself is bilingual-friendly:
+Not a summary — a **judgment**. The skill transcribes the video (free, subtitle-based),
+cross-checks what actually appeared on screen, and returns a chat report instead of a wall of text —
+in **your language**, whatever you ask in:
 
 | Section | What you get |
 |---|---|
-| ① Verdict | What this video is, and whether it's trustworthy |
+| ① Verdict | What this video really is — and whether you can trust it |
 | ② Key content | Timestamped summary — so you don't have to watch |
-| ③ Substance vs. filler | Verified facts / unverified claims / hype, separated |
+| ③ Substance vs. filler | Verified facts / unverified claims / hype, kept separate |
 | ④ Screen-only information | Code, settings, numbers that were never spoken aloud |
-| ⑤ For your situation | Insights mapped to your context (only when visible in the conversation) |
+| ⑤ For your situation | What it means for you — when your context shows in the conversation |
 | ⑥ Next steps | Concrete ways to build on it — set it up, verify claims, save a summary |
 
 ### Highlights
@@ -96,7 +96,7 @@ Reports come back in **your language** — the skill itself is bilingual-friendl
 
 Requires Python 3.9+. Everything else is Claude's job.
 
-If this skill saved you an hour of watching — a ⭐ means a lot, and the **♥ Sponsor** button is up top.
+If this skill just saved you an hour of watching, a ⭐ goes a long way — and there's a **♥ Sponsor** button up top.
 
 ---
 
