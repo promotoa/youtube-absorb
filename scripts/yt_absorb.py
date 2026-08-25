@@ -47,6 +47,16 @@ def mmss(sec):
     h, m = divmod(m, 60)
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m:02d}:{s:02d}"
 
+_VFR = None
+def vfr_flag():
+    """장면추출 프레임레이트 플래그 — ffmpeg 9.0이 -vsync를 제거해 -fps_mode(5.0+)로 대체(실측 §4)."""
+    global _VFR
+    if _VFR is None:
+        r = subprocess.run(["ffmpeg", "-hide_banner", "-h", "full"],
+                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+        _VFR = ["-fps_mode", "vfr"] if "fps_mode" in (r.stdout or "") else ["-vsync", "vfr"]
+    return _VFR
+
 # ── 프레임 층 ──────────────────────────────────────────────────────────────
 
 def dhash(path):
@@ -226,11 +236,15 @@ def main():
             for thresh in ("0.30", "0.45"):
                 shutil.rmtree(fr, ignore_errors=True); os.makedirs(fr)
                 r = subprocess.run(["ffmpeg", "-y", "-i", video,
-                                    "-vf", f"select='gt(scene,{thresh})',showinfo", "-vsync", "vfr",
+                                    "-vf", f"select='gt(scene,{thresh})',showinfo", *vfr_flag(),
                                     os.path.join(fr, "f_%04d.jpg")],
                                    capture_output=True, text=True, encoding="utf-8", errors="replace")
                 pts = re.findall(r"pts_time:([0-9.]+)", r.stderr)
                 n_frames = len([f for f in os.listdir(fr) if f.endswith(".jpg")])
+                if r.returncode != 0 and n_frames == 0:
+                    # 조용한 0장 금지 — 옵션 파스 에러 등은 소리를 내야 고칠 수 있다(§4)
+                    print(f"   ⚠️ffmpeg 장면추출 실패(rc={r.returncode}): {r.stderr.strip()[-300:]}")
+                    break
                 if n_frames <= 150:
                     break
                 print(f"   프레임 {n_frames} > 150 — 문턱 {thresh}→상향 재추출")
