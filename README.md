@@ -103,7 +103,7 @@ If this skill just saved you an hour of watching, a ⭐ goes a long way — and 
 ## 응원하기
 
 이 스킬이 시간을 아껴줬다면 — ⭐ 스타 하나가 큰 힘이 됩니다.
-후원은 상단의 **♥ Sponsor** 버튼으로
+후원은 **[투네이션](https://toon.at/donate/aifavorite)**(카카오페이·카드 바로 결제) 또는 상단의 **♥ Sponsor** 버튼으로
 (만든 사람: [AI 즐겨찾기](https://github.com/promotoa) 채널).
 
 ## License
